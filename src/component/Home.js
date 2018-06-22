@@ -19,28 +19,7 @@ export default class Home extends React.Component {
 
   render () {
     return (
-      <div id='layout'>
-        <a href='#menu' id='menuLink' className='menu-link'>
-          <span></span>
-        </a>
-
-        <div id='menu'>
-          <div className='pure-menu'>
-            <a className='pure-menu-heading' href='#'>Company</a>
-
-            <ul className='pure-menu-list'>
-              <li className='pure-menu-item'><a href='#' className='pure-menu-link'>Home</a></li>
-              <li className='pure-menu-item'><a href='#' className='pure-menu-link'>About</a></li>
-
-              <li className='pure-menu-item menu-item-divided pure-menu-selected'>
-                <a href='#' className='pure-menu-link'>Services</a>
-              </li>
-
-              <li className='pure-menu-item'><a href='#' className='pure-menu-link'>Contact</a></li>
-            </ul>
-          </div>
-        </div>
-
+      <div>
         <div id='main'>
           <div className='header'>
             <h1>Page Title</h1>
@@ -74,11 +53,8 @@ export default class Home extends React.Component {
             </div>
 
             <h2 className='content-subhead'>Try Resizing your Browser</h2>
-            
             {Object.keys(this.state.clientes).map(key => {
-              return (
-                console.log(this.state.clientes[key])
-              )
+              return console.log(this.state.clientes[key])
             })}
           </div>
         </div>
