@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { auth } from '../base'
 
-
 class Login extends Component {
   constructor (props) {
     super(props)
@@ -12,39 +11,54 @@ class Login extends Component {
       password: '',
       isLoggedIn: false,
       isLoggin: false,
+      isAuthing: true,
       error: false,
       msg: ''
     }
   }
 
-  handleEmailChange = (e) => {
-    this.setState({ email: e.target.value })
-  }
-
-  handlePasswordChange = (e) => {
-    this.setState({ password: e.target.value })
+  handleChange = (e) => {
+    let change = {}
+    change[e.target.name] = e.target.value
+    this.setState(change)
   }
 
   handleLogin = () => {
-    this.setState({isLoggin: true})
+    this.setState({ isLoggin: true })
     auth
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => {
-        this.setState({isLoggedIn: true})
-        // this.setState({value: event.target.value}, function () {
-        //   console.log(this.state.value);
-        // });
+        this.setState({ isLoggedIn: true })
+        console.log('logou')
       })
-      .catch(() => {
-        this.setState({
-          isLoggin: false,
-          error: true
-        })
+      .catch((err) => {
+        this.setState({ error: true })
+        console.log(err)
       })
+      .finally(() => {
+        this.setState({ isLoggin: false })
+        console.log('finalizou')
+      })
+  }
 
+  componentDidMount () {
+    auth.onAuthStateChanged(user => {
+      this.setState({
+        isAuthing: false,
+        isLoggedIn: !!user
+      })
+    })
   }
 
   render () {
+    if (this.state.isAuthing) {
+      return (
+        <div className='pure-form'>
+          <h1>Aguarde...</h1>
+        </div>
+      )
+    }
+    
     if (this.state.isLoggedIn) {
       return (
         <Redirect to='/admin' />
@@ -58,16 +72,17 @@ class Login extends Component {
 
           <input
             type='email'
+            name='email'
             placeholder='Email'
             value={this.state.email}
-            onChange={this.handleEmailChange}
+            onChange={this.handleChange}
           />
           <input
             type='password'
             name='password'
             placeholder='Password'
             value={this.state.password}
-            onChange={this.handlePasswordChange}
+            onChange={this.handleChange}
           />
 
           <button onClick={this.handleLogin} className='pure-button pure-button-primary'>Sign in</button>

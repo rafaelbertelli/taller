@@ -13,8 +13,9 @@ import './css/layout.css'
 import Home from './component/Home'
 import Login from './component/Login'
 import Menu from './component/Menu'
-import Error404 from './component/Error404'
 import Cliente from './component/Cliente'
+import Admin from './component/Admin'
+import Error404 from './component/Error404'
 
 class App extends Component {
   render () {
@@ -22,13 +23,25 @@ class App extends Component {
       <Router>
         <div className='container boilerplate shaddow'>
           <div id='layout'>
-            <Menu />
-            <Switch>
-              <Route exact path='/' component={Home} />
-              <Route path='/login' component={Login} />
-              <Route path='/cliente' component={Cliente} />
-              <Route component={Error404} />
-            </Switch>
+
+            <div id='menu'>
+              <Menu />
+            </div>
+
+            <div id='main'>
+              <div className='content'>
+
+                <Switch>
+                  <Route exact path='/' component={Home} />
+                  <Route path='/login' component={Login} />
+                  <Route path='/admin/cliente' component={Cliente} />
+                  <Route path='/admin' component={Admin} />
+                  <Route component={Error404} />
+                </Switch>
+
+              </div>
+            </div>
+
           </div>
         </div>
       </Router>
